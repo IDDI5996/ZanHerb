@@ -1,7 +1,4 @@
 # ZanHerb
-Perfect 👌 Here’s a professional **README description** you can use for your ZanHerb project:
-
----
 
 # ZanHerb – Integrative Centre for Pharmacognosy & Therapeutics
 
