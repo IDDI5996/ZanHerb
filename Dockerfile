@@ -14,10 +14,7 @@ WORKDIR /var/www
 
 # Copy project files (including /public/build)
 COPY . .
-# -------------------------------
-# Configure Apache to serve Laravel public folder
-# -------------------------------
-RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
+
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
