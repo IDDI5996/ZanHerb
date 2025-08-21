@@ -8,9 +8,12 @@ FROM php:8.2-apache
 # -------------------------------
 # Install system dependencies
 # -------------------------------
+# -------------------------------
+# Install system dependencies
+# -------------------------------
 RUN apt-get update && apt-get install -y \
     git zip unzip libpng-dev libonig-dev libxml2-dev \
-    nodejs npm sqlite3 \
+    libsqlite3-dev sqlite3 nodejs npm \
     && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
