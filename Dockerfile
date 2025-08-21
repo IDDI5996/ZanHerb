@@ -1,5 +1,5 @@
 # ===============================
-# ZanHerb Laravel + Tailwind + Vite Dockerfile
+# ZanHerb Laravel + Tailwind + Vite Dockerfile (no build inside)
 # ===============================
 
 # Use official PHP 8.2 image with Apache
@@ -10,7 +10,7 @@ FROM php:8.2-apache
 # -------------------------------
 RUN apt-get update && apt-get install -y \
     git zip unzip libpng-dev libonig-dev libxml2-dev \
-    libsqlite3-dev sqlite3 nodejs npm \
+    libsqlite3-dev sqlite3 \
     && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -42,12 +42,6 @@ RUN mkdir -p database \
 # -------------------------------
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --optimize-autoloader --no-dev
-
-# -------------------------------
-# Install Node dependencies and build assets
-# -------------------------------
-RUN npm install && npm run build
-
 
 # -------------------------------
 # Set permissions (for SQLite + cache)
