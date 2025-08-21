@@ -1,10 +1,11 @@
 FROM php:8.3-fpm
 
 # System dependencies
-RUN apt-get update && apt-get install -y \
+UN apt-get update && apt-get install -y \
     git unzip curl nodejs npm \
-    libpng-dev libjpeg62-turbo-dev libfreetype6-dev libwebp-dev libxpm-dev libonig-dev libxml2-dev \
-    sqlite3 \
+    libpng-dev libjpeg62-turbo-dev libfreetype6-dev libwebp-dev libxpm-dev \
+    libonig-dev libxml2-dev \
+    sqlite3 libsqlite3-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Configure gd
