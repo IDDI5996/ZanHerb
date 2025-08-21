@@ -1,68 +1,31 @@
-# =============================== 
-# ZanHerb Laravel + Tailwind + Vite Dockerfile
-# ===============================
+FROM php:8.3-fpm
 
-# Use official PHP 8.2 image with Apache
-FROM php:8.2-apache
-
-# -------------------------------
 # Install system dependencies
-# -------------------------------
-# -------------------------------
-# Install system dependencies
-# -------------------------------
 RUN apt-get update && apt-get install -y \
-    git zip unzip libpng-dev libonig-dev libxml2-dev \
-    libsqlite3-dev sqlite3 nodejs npm \
-    && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd \
+    git unzip libpng-dev libonig-dev libxml2-dev curl \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /var/www
 
-# -------------------------------
-# Copy Laravel project
-# -------------------------------
+# Copy project files (including /public/build)
 COPY . .
-
 # -------------------------------
 # Configure Apache to serve Laravel public folder
 # -------------------------------
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-# -------------------------------
-# Create SQLite database file if missing
-# -------------------------------
-RUN mkdir -p database \
-    && touch database/database.sqlite
+# Laravel optimizations
+RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
 
-# -------------------------------
-# Install Composer and Laravel dependencies
-# -------------------------------
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN composer install --optimize-autoloader --no-dev
+# Expose Render's port
+EXPOSE 10000
 
-# -------------------------------
-# Install Node dependencies and build assets
-# -------------------------------
-RUN npm install && npm run build
-
-# -------------------------------
-# Set permissions (for SQLite + cache)
-# -------------------------------
-RUN chown -R www-data:www-data storage bootstrap/cache database \
-    && chmod -R 775 storage bootstrap/cache database
-
-# -------------------------------
-# Run Laravel migrations on container start
-# -------------------------------
-COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["apache2-foreground"]
-
-# Expose port 80
-EXPOSE 80
+# Start Laravel
+CMD php artisan serve --host=0.0.0.0 --port=10000
