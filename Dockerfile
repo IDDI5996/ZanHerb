@@ -1,4 +1,4 @@
-# ===============================
+# =============================== 
 # ZanHerb Laravel + Tailwind + Vite Dockerfile
 # ===============================
 
@@ -11,7 +11,7 @@ FROM php:8.2-apache
 RUN apt-get update && apt-get install -y \
     git zip unzip libpng-dev libonig-dev libxml2-dev \
     nodejs npm sqlite3 \
-    && docker-php-ext-install pdo pdo_mysql mbstring bcmath gd \
+    && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache mod_rewrite
@@ -31,9 +31,10 @@ COPY . .
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
 # -------------------------------
-# Create SQLite database file
+# Create SQLite database file if missing
 # -------------------------------
-RUN touch database/database.sqlite
+RUN mkdir -p database \
+    && touch database/database.sqlite
 
 # -------------------------------
 # Install Composer and Laravel dependencies
@@ -44,18 +45,17 @@ RUN composer install --optimize-autoloader --no-dev
 # -------------------------------
 # Install Node dependencies and build assets
 # -------------------------------
-RUN npm install
-RUN npm run build
+RUN npm install && npm run build
 
 # -------------------------------
-# Set permissions
+# Set permissions (for SQLite + cache)
 # -------------------------------
-RUN chown -R www-data:www-data storage bootstrap/cache database
+RUN chown -R www-data:www-data storage bootstrap/cache database \
+    && chmod -R 775 storage bootstrap/cache database
 
 # -------------------------------
 # Run Laravel migrations on container start
 # -------------------------------
-# Use entrypoint to run migrations and start Apache
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
