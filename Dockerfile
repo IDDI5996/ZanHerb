@@ -2,19 +2,20 @@
 FROM php:8.3-fpm
 
 # Install system dependencies
-# Install system dependencies first
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    curl \
-    nodejs \
-    npm \
+    git unzip curl nodejs npm \
+    libpng-dev libjpeg62-turbo-dev libfreetype6-dev libwebp-dev libxpm-dev libonig-dev libxml2-dev \
+    sqlite3 \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions separately
+# Configure gd properly
+RUN docker-php-ext-configure gd \
+    --with-freetype=/usr/include/ \
+    --with-jpeg=/usr/include/ \
+    --with-webp=/usr/include/ \
+    --with-xpm=/usr/include/
+
+# Install PHP extensions
 RUN docker-php-ext-install \
     pdo_mysql \
     pdo_sqlite \
