@@ -11,10 +11,11 @@
             Explore remedies rooted in tradition and backed by scientific innovation.
         </p>
         <div class="flex flex-wrap justify-center gap-4">
-            <a href="/book"
-               class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded shadow-lg transition">
-                Book Consultation
+            <a href="{{ auth()->check() && auth()->user()->is_admin ? route('admin.dashboard') : (auth()->check() ? route('dashboard') : url('/')) }}"
+                class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded shadow-lg transition">
+                    Book Consultation
             </a>
+
             <a href="/products"
                class="bg-white hover:bg-gray-200 text-green-800 px-5 py-3 rounded shadow-lg transition">
                 Explore Products
