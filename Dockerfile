@@ -7,11 +7,14 @@ FROM php:8.3-apache
 RUN a2enmod rewrite
 
 # Install dependencies for PHP extensions + Node.js + npm
+# Install dependencies for PHP extensions + Node.js (from NodeSource)
 RUN apt-get update && apt-get install -y \
-    git zip unzip libpng-dev libonig-dev libxml2-dev sqlite3 \
-    nodejs npm \
+    git zip unzip libpng-dev libonig-dev libxml2-dev sqlite3 curl gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 
 # ==============================
 # 2. Configure Apache
