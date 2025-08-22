@@ -7,7 +7,7 @@
         <h1 class="text-4xl md:text-5xl font-bold mb-4">ZanHerb Integrative Centre</h1>
         <p class="text-xl mb-4 italic">"Rooted in Nature, Proven by Science"</p>
         <p class="text-lg mb-6">
-            Welcome to ZanHerb — East Africa’s herbal-conventional medicine center led by Prof. Mayasa.
+            Welcome to ZanHerb — Zanzibar herbal-conventional medicine center led by Prof. Mayasa.
             Explore remedies rooted in tradition and backed by scientific innovation.
         </p>
         <div class="flex flex-wrap justify-center gap-4">
@@ -37,7 +37,7 @@
     <div class="container mx-auto px-6">
         <h2 class="text-3xl font-semibold text-center text-green-800 mb-6">Who We Are</h2>
         <p class="max-w-4xl mx-auto text-lg text-gray-700 text-center">
-            ZanHerb is an initiative of the Mayasa Foundation in Zanzibar. We specialize in integrative healthcare — combining herbal and conventional medical practices. Led by Prof. Mayasa, we provide consultations, custom remedies, laboratory testing, and community health education.
+            We are ZanHerb, an initiative of the Mayasa Foundation dedicated to blending traditional Tanzanian herbal medicine with modern science. Based in Zanzibar, we provide integrative healthcare, develop high-quality herbal products, support women farmers through sustainable sourcing, and collaborate with researchers to advance natural medicine for community wellness.
         </p>
     </div>
 </section>
@@ -45,7 +45,7 @@
 <!-- Promo Video (Optional) -->
 <section class="py-12 bg-white">
     <div class="container mx-auto px-6 text-center">
-        <h2 class="text-3xl font-semibold text-green-800 mb-4">Explore Our Mission</h2>
+        <h2 class="text-3xl font-semibold text-green-800 mb-4">Tutorial Video</h2>
         <div class="aspect-w-16 aspect-h-9 mx-auto max-w-4xl">
             <iframe class="w-full h-full rounded-lg shadow-lg"
                     src="https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE"

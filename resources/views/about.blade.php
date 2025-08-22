@@ -5,11 +5,17 @@
     <div class="container mx-auto px-6 max-w-5xl">
         <h1 class="text-4xl font-bold text-green-800 mb-6 text-center">About ZanHerb</h1>
 
-        <!-- History and Mission -->
+        <!-- Foundation -->
         <div class="mb-10">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-2">Our Foundation</h2>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-2">About Us</h2>
             <p class="text-gray-700 leading-relaxed">
-                The Mayasa Foundation was established with the goal of integrating traditional African herbal medicine with modern science. Through ZanHerb, the foundation has pioneered accessible, culturally relevant, and scientifically validated herbal treatments in Zanzibar and beyond.
+                The Mayasa Foundation, through its flagship initiative the ZanHerb Integrative Centre for Pharmacognosy & Therapeutics, is dedicated to transforming healthcare in Zanzibar and beyond. ZanHerb bridges traditional herbal wisdom with modern scientific practices to deliver safe, effective, and culturally trusted solutions for skin, reproductive, eye health, and chronic diseases.
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-4">
+                Our work extends beyond treatment. We actively empower local communities, particularly women farmers, by sourcing raw medicinal plants such as lemongrass (mchaichai) and other herbs directly from them, creating sustainable livelihoods while ensuring a reliable supply of high-quality raw materials for our small-scale processing unit. This approach strengthens both economic resilience and the authenticity of our herbal products.
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-4">
+                Led by Prof. Mayasa, a pioneer in integrative medicine, ZanHerb comprises a multidisciplinary team of scientists, healthcare professionals, and community partners. Together, we aim to improve public health outcomes, promote research-driven herbal innovation, and position Zanzibar as a regional leader in natural medicine.
             </p>
         </div>
 
@@ -17,7 +23,15 @@
         <div class="mb-10">
             <h2 class="text-2xl font-semibold text-gray-800 mb-2">Our Vision</h2>
             <p class="text-gray-700 leading-relaxed">
-                To be a center of excellence in integrative health by advancing the research, education, and application of traditional herbal remedies in harmony with conventional medicine.
+                To become the leading hub for sustainable, innovative herbal medicine in Zanzibar, Tanzania and whole East Africa, advancing community wellness and serving as a global model for harmonizing traditional and modern healthcare practices.
+            </p>
+        </div>
+
+        <!-- Mission -->
+        <div class="mb-10">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-2">Our Mission</h2>
+            <p class="text-gray-700 leading-relaxed">
+                To provide integrative, science-backed herbal healthcare that empowers communities, uplifts women farmers in Zanzibar, improves public health, and preserves traditional knowledge for future generations.
             </p>
         </div>
 
