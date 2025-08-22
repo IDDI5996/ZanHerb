@@ -48,12 +48,12 @@
                     @auth
                         @if(!auth()->user()->is_admin)
                             <x-nav-link :href="route('bookings.create')" :active="request()->routeIs('bookings.create')" class="text-white hover:text-gray-200">
-                                {{ __('Book') }}
+                                {{ __('Booking for Consultation') }}
                             </x-nav-link>
                         @endif
                     @else
                         <x-nav-link :href="route('bookings.create')" :active="request()->routeIs('bookings.create')" class="text-white hover:text-gray-200">
-                            {{ __('Book') }}
+                            {{ __('Booking for Consultation') }}
                         </x-nav-link>
                     @endauth
                     
@@ -145,12 +145,12 @@
                 @auth
                     @if(!auth()->user()->is_admin)
                         <x-responsive-nav-link :href="route('bookings.create')" :active="request()->routeIs('bookings.create')" class="text-white hover:bg-green-700">
-                            {{ __('Book') }}
+                            {{ __('Booking for Consultation') }}
                         </x-responsive-nav-link>
                     @endif
                 @else
                     <x-responsive-nav-link :href="route('bookings.create')" :active="request()->routeIs('bookings.create')" class="text-white hover:bg-green-700">
-                        {{ __('Book') }}
+                        {{ __('Booking for Consultation') }}
                     </x-responsive-nav-link>
                 @endauth
                 
