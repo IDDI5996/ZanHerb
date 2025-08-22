@@ -6,29 +6,29 @@ FROM php:8.3-apache
 # Enable Apache modules
 RUN a2enmod rewrite
 
-# Install system dependencies
-# Replace the problematic section with this:
-RUN apt-get update --fix-missing && \
+# Step 1: Update and install basic dependencies
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
-        gnupg \
-        lsb-release && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+        curl \
+        gnupg
 
-# Add trusted certificates and update
-RUN mkdir -p /etc/apt/keyrings && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+# Step 2: Install the main packages
+RUN apt-get update && \
+    apt-get install -y \
         git \
         zip \
         unzip \
         libpng-dev \
         libonig-dev \
         libxml2-dev \
-        sqlite3 \
-        curl \
-    && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*e
+        sqlite3
+
+# Step 3: Install PHP extensions
+RUN docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd
+
+# Step 4: Clean up
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # ==============================
 # 2. Configure Apache
