@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CollaborationController;
 
 // Public Routes
 Route::get('/', function () {
@@ -20,6 +21,10 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('about');
 });
+
+Route::get('/collaborations', [CollaborationController::class, 'create'])->name('collaborate.create');
+Route::post('/collaborations', [CollaborationController::class, 'store'])->name('collaborate.store');
+
 
 // Promotions page
 Route::get('/promotions', [PromotionController::class, 'publicIndex'])->name('promotions.index');

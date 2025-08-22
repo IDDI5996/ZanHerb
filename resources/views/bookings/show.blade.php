@@ -56,35 +56,6 @@
                     </div>
                     @endif
                 </div>
-                
-                <!--<div class="mt-8 border-t border-gray-200 pt-5">
-                    <div class="flex justify-end space-x-3">
-                        @if($booking->status == 'pending')
-                        <form action="{{ route('admin.bookings.status', $booking) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <input type="hidden" name="status" value="confirmed">
-                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                Confirm Booking
-                            </button>
-                        </form>
-                        @endif
-                        
-                        @if($booking->status != 'cancelled')
-                        <form action="{{ route('admin.bookings.status', $booking) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <input type="hidden" name="status" value="cancelled">
-                            <div class="flex">
-                                <input type="text" name="cancellation_reason" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Cancellation reason">
-                                <button type="submit" class="ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                    Cancel Booking
-                                </button>
-                            </div>
-                        </form>
-                        @endif
-                    </div>
-                </div>-->
             </div>
         </div>
         

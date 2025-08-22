@@ -19,7 +19,7 @@
                class="bg-white hover:bg-gray-200 text-green-800 px-5 py-3 rounded shadow-lg transition">
                 Explore Products
             </a>
-            <a href="/collaborations"
+            <a href="{{ route('collaborate.create') }}"
                class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-3 rounded shadow-lg transition">
                 Join as Collaborator
             </a>
