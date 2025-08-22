@@ -6,15 +6,19 @@ FROM php:8.3-apache
 # Enable Apache modules
 RUN a2enmod rewrite
 
-# Install dependencies for PHP extensions + Node.js + npm
-# Install dependencies for PHP extensions + Node.js (from NodeSource)
-RUN apt-get update && apt-get install -y \
-    git zip unzip libpng-dev libonig-dev libxml2-dev sqlite3 curl gnupg \
-    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y \
+        git zip unzip libpng-dev libonig-dev libxml2-dev sqlite3 curl \
     && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Install Node.js from official repositories (more stable)
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# ... rest of your Dockerfile remains the same
 
 # ==============================
 # 2. Configure Apache
