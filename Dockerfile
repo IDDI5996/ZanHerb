@@ -7,18 +7,28 @@ FROM php:8.3-apache
 RUN a2enmod rewrite
 
 # Install system dependencies
-RUN apt-get update && \
-    apt-get install -y \
-        git zip unzip libpng-dev libonig-dev libxml2-dev sqlite3 curl \
-    && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install Node.js from official repositories (more stable)
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs && \
+# Replace the problematic section with this:
+RUN apt-get update --fix-missing && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        gnupg \
+        lsb-release && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# ... rest of your Dockerfile remains the same
+# Add trusted certificates and update
+RUN mkdir -p /etc/apt/keyrings && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        git \
+        zip \
+        unzip \
+        libpng-dev \
+        libonig-dev \
+        libxml2-dev \
+        sqlite3 \
+        curl \
+    && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*e
 
 # ==============================
 # 2. Configure Apache
