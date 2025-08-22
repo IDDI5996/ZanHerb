@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-# Run Laravel migrations
-php artisan migrate --force
+# Run migrations safely
+php artisan migrate --force || true
 
 # Start Apache in foreground
-exec "$@"
+exec apache2-foreground

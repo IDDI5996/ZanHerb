@@ -1,66 +1,61 @@
-# ===============================
-# ZanHerb Laravel + Tailwind + Vite Dockerfile (with build inside)
-# ===============================
+# ==============================
+# 1. Base image with PHP + Apache
+# ==============================
+FROM php:8.3-apache
 
-# -------------------------------
-# 1) Build frontend assets
-# -------------------------------
-FROM node:20 AS frontend
+# Enable Apache modules
+RUN a2enmod rewrite
 
-WORKDIR /app
-COPY package*.json vite.config.* postcss.config.* tailwind.config.* ./
-RUN npm install
-COPY resources ./resources
-COPY public ./public
-RUN npm run build
-
-# -------------------------------
-# 2) PHP + Apache for Laravel
-# -------------------------------
-FROM php:8.2-apache
-
-# Install system dependencies
+# Install dependencies for PHP extensions + Node.js + npm
 RUN apt-get update && apt-get install -y \
-    git zip unzip libpng-dev libonig-dev libxml2-dev \
-    libsqlite3-dev sqlite3 \
+    git zip unzip libpng-dev libonig-dev libxml2-dev sqlite3 \
+    nodejs npm \
     && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+# ==============================
+# 2. Configure Apache
+# ==============================
+# Set Render dynamic port
+ARG PORT
+ENV PORT=${PORT}
 
-# Set working directory
+# Update Apache to listen on Render’s PORT
+RUN sed -i "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf
+
+# Setup Laravel public directory as Apache root
 WORKDIR /var/www/html
+COPY . /var/www/html
 
-# Copy Laravel project
-COPY . .
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Copy built frontend assets from node build
-COPY --from=frontend /app/public/build ./public/build
+# ==============================
+# 3. Install Composer & PHP deps
+# ==============================
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+RUN composer install --no-dev --optimize-autoloader
 
-# Configure Apache to serve Laravel public folder
-RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' \
-    /etc/apache2/sites-available/000-default.conf
+# ==============================
+# 4. Install Node deps & build assets
+# ==============================
+RUN npm install && npm run build
 
-# Create SQLite database file if missing
-RUN mkdir -p database \
-    && touch database/database.sqlite
+# ==============================
+# 5. Laravel optimize & permissions
+# ==============================
+RUN php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
 
-# Install Composer and Laravel dependencies
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN composer install --optimize-autoloader --no-dev
-
-# Set permissions (for SQLite + cache)
-RUN chown -R www-data:www-data storage bootstrap/cache database \
-    && chmod -R 775 storage bootstrap/cache database
-
-# Run Laravel migrations on container start
-COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+# ==============================
+# 6. Entrypoint
+# ==============================
+COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-# Start Apache
-CMD ["apache2-foreground"]
-
-# Expose port 80
-EXPOSE 80
+# ==============================
+# 7. Expose port
+# ==============================
+EXPOSE ${PORT}
