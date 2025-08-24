@@ -11,26 +11,48 @@ class ServiceController extends Controller
      * Display a listing of the resource.
      */
     
-    //Public service listing
+    // Public service listing with categories
     public function publicIndex()
     {
-        $services = Service::where('is_active', true)
-                         ->orderBy('name')
-                         ->get();
+        $categories = Service::getCategories();
+        $servicesByCategory = [];
+        
+        foreach ($categories as $category) {
+            $servicesByCategory[$category] = Service::active()
+                ->byCategory($category)
+                ->orderBy('sort_order')
+                ->orderBy('name')
+                ->get();
+        }
 
-        return view('services.index', compact('services'));
+        $featuredServices = Service::active()
+            ->featured()
+            ->orderBy('sort_order')
+            ->limit(3)
+            ->get();
+
+        return view('services.index', compact('servicesByCategory', 'categories', 'featuredServices'));
     }
 
-    //Public service detail
+    // Public service detail
     public function publicShow(Service $service)
     {
         if (!$service->is_active) {
             abort(404);
         }
 
-        return view('services.show', compact('service'));
+        // Get related services from the same category
+        $relatedServices = Service::active()
+            ->byCategory($service->category)
+            ->where('id', '!=', $service->id)
+            ->orderBy('sort_order')
+            ->limit(3)
+            ->get();
+
+        return view('services.show', compact('service', 'relatedServices'));
     }
     
+    // Admin index
     public function index()
     {
         $services = Service::latest()->paginate(10);
@@ -42,7 +64,17 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        return view('admin.services.create');
+        $categories = Service::getCategories();
+        $icons = [
+            'chat-bubble', 'stethoscope', 'heartbeat', 'leaf', 
+            'heart', 'tint', 'brain', 'venus-mars', 
+            'mortar-pestle', 'users', 'seedling', 'microscope',
+            'book-open', 'flask', 'lightbulb', 'vial',
+            'project-diagram', 'female', 'handshake', 'network-wired',
+            'video', 'pump-medical', 'shield'
+        ];
+        
+        return view('admin.services.create', compact('categories', 'icons'));
     }
 
     /**
@@ -53,9 +85,15 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'long_description' => 'nullable|string',
             'duration' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
-            'is_active' => 'boolean'
+            'category' => 'required|string',
+            'icon' => 'nullable|string',
+            'secondary_icon' => 'nullable|string',
+            'is_active' => 'boolean',
+            'featured' => 'boolean',
+            'sort_order' => 'integer|min:0'
         ]);
 
         Service::create($validated);
@@ -77,7 +115,17 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        return view('admin.services.edit', compact('service'));
+        $categories = Service::getCategories();
+        $icons = [
+            'chat-bubble', 'stethoscope', 'heartbeat', 'leaf', 
+            'heart', 'tint', 'brain', 'venus-mars', 
+            'mortar-pestle', 'users', 'seedling', 'microscope',
+            'book-open', 'flask', 'lightbulb', 'vial',
+            'project-diagram', 'female', 'handshake', 'network-wired',
+            'video', 'pump-medical', 'shield'
+        ];
+        
+        return view('admin.services.edit', compact('service', 'categories', 'icons'));
     }
 
     /**
@@ -88,9 +136,15 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'long_description' => 'nullable|string',
             'duration' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
-            'is_active' => 'boolean'
+            'category' => 'required|string',
+            'icon' => 'nullable|string',
+            'secondary_icon' => 'nullable|string',
+            'is_active' => 'boolean',
+            'featured' => 'boolean',
+            'sort_order' => 'integer|min:0'
         ]);
 
         $service->update($validated);

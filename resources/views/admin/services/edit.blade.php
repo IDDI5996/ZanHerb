@@ -18,9 +18,47 @@
                         </div>
 
                         <div class="sm:col-span-6">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                            <textarea id="description" name="description" rows="3" required
+                            <label for="description" class="block text-sm font-medium text-gray-700">Short Description</label>
+                            <textarea id="description" name="description" rows="2" required
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500">{{ $service->description }}</textarea>
+                        </div>
+
+                        <div class="sm:col-span-6">
+                            <label for="long_description" class="block text-sm font-medium text-gray-700">Detailed Description</label>
+                            <textarea id="long_description" name="long_description" rows="4"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500">{{ $service->long_description }}</textarea>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                            <select id="category" name="category" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category }}" {{ $service->category == $category ? 'selected' : '' }}>{{ $category }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="icon" class="block text-sm font-medium text-gray-700">Primary Icon</label>
+                            <select id="icon" name="icon"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                                <option value="">Select an icon</option>
+                                @foreach($icons as $icon)
+                                    <option value="{{ $icon }}" {{ $service->icon == $icon ? 'selected' : '' }}>{{ $icon }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="secondary_icon" class="block text-sm font-medium text-gray-700">Secondary Icon (Optional)</label>
+                            <select id="secondary_icon" name="secondary_icon"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                                <option value="">Select an icon</option>
+                                @foreach($icons as $icon)
+                                    <option value="{{ $icon }}" {{ $service->secondary_icon == $icon ? 'selected' : '' }}>{{ $icon }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="sm:col-span-2">
@@ -30,17 +68,23 @@
                         </div>
 
                         <div class="sm:col-span-2">
-                            <label for="price" class="block text-sm font-medium text-gray-700">Price ($)</label>
+                            <label for="price" class="block text-sm font-medium text-gray-700">Price (TZS)</label>
                             <input type="number" name="price" id="price" min="0" step="0.01" value="{{ $service->price }}" required
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500">
                         </div>
 
                         <div class="sm:col-span-2">
-                            <label for="is_active" class="block text-sm font-medium text-gray-700">Status</label>
-                            <select id="is_active" name="is_active"
+                            <label for="sort_order" class="block text-sm font-medium text-gray-700">Sort Order</label>
+                            <input type="number" name="sort_order" id="sort_order" min="0" value="{{ $service->sort_order }}"
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500">
-                                <option value="1" {{ $service->is_active ? 'selected' : '' }}>Active</option>
-                                <option value="0" {{ !$service->is_active ? 'selected' : '' }}>Inactive</option>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="featured" class="block text-sm font-medium text-gray-700">Featured</label>
+                            <select id="featured" name="featured"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                                <option value="0" {{ !$service->featured ? 'selected' : '' }}>No</option>
+                                <option value="1" {{ $service->featured ? 'selected' : '' }}>Yes</option>
                             </select>
                         </div>
                     </div>

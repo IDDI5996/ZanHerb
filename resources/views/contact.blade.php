@@ -32,7 +32,7 @@
                     <a href="https://whatsapp.com/channel/0029VbBuvoBL7UVOYRRFUW1I" target="_blank" class="text-green-500 hover:text-green-700">
                         <i class="fab fa-whatsapp fa-2x"></i>
                     </a>
-                    <a href="https://instagram.com/YourInstagram" target="_blank" class="text-pink-500 hover:text-pink-700">
+                    <a href="https://www.instagram.com/fahari_ya_zanzibar?igsh=cnl6cHN5ZHpjZ2E3" target="_blank" class="text-pink-500 hover:text-pink-700">
                         <i class="fab fa-instagram fa-2x"></i>
                     </a>
                     <a href="https://facebook.com/YourFacebook" target="_blank" class="text-blue-700 hover:text-blue-900">
