@@ -172,55 +172,6 @@
                                 }
                          });
                     </script>
-                    
-                    <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                            const player = new Plyr("#player-{{ $tutorial->id }}");
-
-                            // Increment views only on first play
-                            let viewCounted = false;
-                        player.on("play", () => {
-                            if (!viewCounted) {
-                            viewCounted = true;
-                            fetch("{{ route('tutorials.incrementView', $tutorial->id) }}", {
-                                method: "POST",
-                                    headers: {
-                                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                                        "Content-Type": "application/json"
-                                    },
-                                    body: JSON.stringify({})
-                                }).then(r => r.json()).then(d => console.log("View +1:", d));
-                            }
-                        });
-
-                        // Track progress continuously
-                        player.on("timeupdate", () => {
-                            let percent = Math.round((player.currentTime / player.duration) * 100);
-                            if (percent > 0) {
-                                fetch("{{ route('tutorials.updateProgress', $tutorial->id) }}", {
-                                    method: "POST",
-                                    headers: {
-                                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                                        "Content-Type": "application/json"
-                                    },
-                                    body: JSON.stringify({ progress: percent })
-                                });
-                            }
-                        });
-
-                        // On end, force 100%
-                        player.on("ended", () => {
-                            fetch("{{ route('tutorials.updateProgress', $tutorial->id) }}", {
-                                method: "POST",
-                                headers: {
-                                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                                    "Content-Type": "application/json"
-                                },
-                                body: JSON.stringify({ progress: 100 })
-                            });
-                        });
-                    });
-                    </script>
                     <div class="p-4">
                         <h4 class="font-semibold text-gray-900 mb-1">{{ $tutorial->title }}</h4>
                         <p class="text-sm text-gray-600 mb-3">{{ $tutorial->description }}</p>
