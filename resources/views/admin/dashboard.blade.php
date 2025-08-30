@@ -56,6 +56,12 @@
                 <h2 class="text-xl font-semibold text-green-800">Manage Notifications</h2>
                 <p class="text-gray-600 mt-2">Post announcements for all users.</p>
             </a>
+            
+            <!-- Manage Tutorials -->
+            <a href="{{ route('admin.tutorials.index') }}" class="bg-green-50 p-6 rounded-lg shadow-md hover:bg-green-100 transition duration-200">
+                <h2 class="text-xl font-semibold text-green-800">Manage Tutorials</h2>
+                <p class="text-gray-600 mt-2">Upload and organize video tutorials.</p>
+            </a>
         </div>
 
         <!-- Main Content Section -->

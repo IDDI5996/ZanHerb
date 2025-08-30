@@ -33,6 +33,7 @@ class UserController extends Controller
         // Get active services
         $services = Service::where('is_active', true)
                           ->orderBy('name')
+                          ->limit(1)
                           ->get();
         
         // Get approved products (limit to 3 for the dashboard)

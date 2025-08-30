@@ -11,6 +11,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CollaborationController;
+use App\Http\Controllers\TutorialController;
 
 // Public Routes
 Route::get('/', function () {
@@ -43,6 +44,17 @@ Route::prefix('products')->group(function () {
 Route::get('/contact', [ContactController::class, 'show']);
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
+//video tutorial
+Route::get('/tutorials', [TutorialController::class, 'publicIndex'])->name('tutorials.index');
+Route::get('/tutorials/{tutorial}', [TutorialController::class, 'show'])->name('tutorials.show');
+
+Route::post('/tutorials/{id}/increment-view', [TutorialController::class, 'incrementView'])
+    ->name('tutorials.incrementView');
+Route::post('/tutorials/{id}/progress', [TutorialController::class, 'updateProgress'])
+    ->name('tutorials.updateProgress');
+Route::post('/tutorials/{tutorial}/duration', [TutorialController::class, 'setDuration'])
+    ->name('tutorials.setDuration');
+
 // Authenticated User Routes
 Route::middleware('auth')->group(function () {
     // Booking Routes (now reroup(function () {quires login)
@@ -59,10 +71,7 @@ Route::middleware('auth')->group(function () {
     // Feedback
     Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.submit');
     
-    //Products
-    //Route::get('/products', [ProductController::class, 'publicIndex'])->name('products.index');
-    //Route::get('/products/{product}', [ProductController::class, 'publicShow'])->name('products.show');
-
+   
     // Dashboard
     Route::get('/dashboard', [UserController::class, 'dashboard'])
         ->middleware('verified')
@@ -107,7 +116,19 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\IsAdmin::class])
         
         Route::resource('notifications', \App\Http\Controllers\Admin\NotificationController::class)
             ->except(['show']); //We are not using show
+             
+        //video tutorial
+        Route::resource('admin/tutorials', TutorialController::class); 
         
+        Route::delete('/admin/tutorials/{tutorial}', [TutorialController::class, 'destroy'])
+            ->name('tutorials.destroy');
+        
+        Route::get('/admin/tutorials/{tutorial}/edit', [TutorialController::class, 'edit'])
+            ->name('tutorials.edit');
+        
+        Route::put('/admin/tutorials/{tutorial}', [TutorialController::class, 'update'])
+            ->name('admin.tutorials.update');
+
     });
 
 // Test Routes (can be removed in production)

@@ -44,7 +44,9 @@
                     <x-nav-link href="/products" :active="request()->is('products')" class="text-white hover:text-gray-200">
                         {{ __('Products') }}
                     </x-nav-link>
-                    
+                    <x-nav-link href="/tutorials" :active="request()->is('tutorials')" class="text-white hover:text-gray-200">
+                        {{ __('Tutorials') }}
+                    </x-nav-link>
                     @auth
                         @if(!auth()->user()->is_admin)
                             <x-nav-link :href="route('bookings.create')" :active="request()->routeIs('bookings.create')" class="text-white hover:text-gray-200">
@@ -141,7 +143,9 @@
                 <x-responsive-nav-link href="/products" :active="request()->is('products')" class="text-white hover:bg-green-700">
                     {{ __('Products') }}
                 </x-responsive-nav-link>
-                
+                <x-nav-link href="/tutorials" :active="request()->is('tutorials')" class="text-white hover:text-gray-200">
+                        {{ __('Tutorials') }}
+                </x-nav-link>
                 @auth
                     @if(!auth()->user()->is_admin)
                         <x-responsive-nav-link :href="route('bookings.create')" :active="request()->routeIs('bookings.create')" class="text-white hover:bg-green-700">
