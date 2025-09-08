@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="bg-cover bg-center min-h-[90vh] flex items-center justify-center"
-         style="background-image: url('/images/hero-banner.png');">
+<section 
+    class="bg-cover bg-center w-full min-h-screen flex items-center justify-center"
+    style="background-image: url('{{ asset('images/hero-banner.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    
     <div class="bg-black bg-opacity-60 p-8 rounded-lg text-center text-white max-w-3xl">
         <h1 class="text-4xl md:text-5xl font-bold mb-4">ZanHerb Integrative Centre</h1>
         <p class="text-xl mb-4 italic">"Rooted in Nature, Proven by Science"</p>
