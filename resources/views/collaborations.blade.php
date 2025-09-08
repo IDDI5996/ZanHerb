@@ -8,19 +8,19 @@
         <!-- Partner Logos/Profiles -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-12">
             <div class="bg-gray-50 p-4 rounded-lg shadow text-center">
-                <img src="/images/partners/zahri.png" alt="ZAHRI" class="w-28 h-28 mx-auto mb-4">
+                <img src="/images/partners/zahri.jpg" alt="ZAHRI" class="w-28 h-28 object-cover rounded-full mx-auto mb-4">
                 <h2 class="text-xl font-semibold text-green-800">ZAHRI</h2>
                 <p class="text-gray-600">Zanzibar Herbal Research Institute</p>
             </div>
 
             <div class="bg-gray-50 p-4 rounded-lg shadow text-center">
-                <img src="/images/partners/suza.png" alt="SUZA" class="w-28 h-28 mx-auto mb-4">
+                <img src="/images/partners/suza.jpg" alt="SUZA" class="w-28 h-28 object-cover rounded-full mx-auto mb-4">
                 <h2 class="text-xl font-semibold text-green-800">SUZA</h2>
                 <p class="text-gray-600">State University of Zanzibar</p>
             </div>
 
             <div class="bg-gray-50 p-4 rounded-lg shadow text-center">
-                <img src="/images/partners/ngo.png" alt="NGO" class="w-28 h-28 mx-auto mb-4">
+                <img src="/images/partners/ngo.jpg" alt="NGO" class="w-28 h-28 object-cover rounded-full mx-auto mb-4">
                 <h2 class="text-xl font-semibold text-green-800">Herbal NGO</h2>
                 <p class="text-gray-600">International Herbal Alliance</p>
             </div>

@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ auth()->check() && auth()->user()->is_admin ? route('admin.dashboard') : (auth()->check() ? route('dashboard') : url('/')) }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-white" />
+                        <x-application-logo class="block h-11 w-11 object-cover rounded-full text-white" />
                     </a>
                 </div>
 
